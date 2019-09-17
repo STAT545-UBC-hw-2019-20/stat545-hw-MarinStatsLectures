@@ -1,0 +1,197 @@
+---
+title: "Untitled"
+author: "Mike Marin"
+date: '2019-09-17'
+output: pdf_document
+always_allow_html: yes
+---
+# The Gapminder Data
+
+
+
+```{r LoadingLibraries, warning=FALSE, echo=FALSE}
+library(tibble)
+library(gapminder)
+library(DT)
+```
+
+## Variables Collected
+
+Here, we can see the __variables__ collected in the data set:
+
+```{r, echo=FALSE}
+names(gapminder)
+```
+
+## Some Basic Summaries
+
+
+The data dimensions are as folows:
+
+```{r}
+dim(gapminder)
+```
+
+## The Full Data
+
+To explore the full data, you can play around here:
+
+```{r}
+# the datatable makes it easier to do something in HTML
+datatable(as_tibble(gapminder))
+```
+
+# Some Univariate Summaries
+
+It is of interest to take a look at each of the variables, and provide a quick summary, both numerically as well as graphically
+
+## A Quick Glance
+
+Following are basic univariate summaries for each of the variables:
+
+```{r, echo=FALSE}
+summary(gapminder)
+```
+
+## Countires and Continents
+
+Which countries are represented in the data?  
+
+- In total there are 142 countries represented. They are not all listed here for the sake of space.  
+
+- There are a total of 5 geopolitical continents recorded:
+    + Africa
+    + Asia
+    +  Europe
+    + Americas (made up of North America and South America are combined)
+    + Oceania (Australia, New Zealand, and surrounding island countries)
+    + Antarctica is not included in the data
+
+## Years Recorded
+
+The data was collected for a number of years.  The years the data was collected for were:
+
+```{r, echo=FALSE}
+levels(as.factor(gapminder$year))
+```
+
+
+## Life Expectancy, GDPperCap, and Population
+
+These are all numeric variables, and all likely related to one another.  Following are basic summaries and plots for each:
+
+### Life Expectancy
+
+```{r, warning=FALSE}
+boxplot(gapminder$lifeExp, ylab="LifeExp", las=1)
+summary(gapminder$lifeExp)
+```
+
+Wow, 23 years life expectancy?!  Where did that come from?
+
+```{r, echo=FALSE}
+gapminder[gapminder$lifeExp <24, ]
+```
+
+Oh, ok, we all know that there was a  *__LOT__* going on there at that time!
+
+### GDP Per Capita
+
+
+```{r, warning=FALSE}
+boxplot(gapminder$gdpPercap, ylab="GDP/cap", las=1)
+summary(gapminder$gdpPercap)
+```
+
+And a quick note that since GDP/cap is a rate, it may be better to be exploring it on the log(ln)-scale
+
+```{r, warning=FALSE}
+boxplot(log(gapminder$gdpPercap), ylab="log-GDP/cap", las=1)
+summary(log(gapminder$gdpPercap))
+```
+
+### Population
+
+```{r, warning=FALSE}
+boxplot(gapminder$pop, ylab="Population", las=1)
+summary(gapminder$pop)
+```
+
+Again, it may be better to examine this on the log-scale, as populations tend to grow exponentially
+
+```{r, warning=FALSE}
+boxplot(log(gapminder$pop), ylab="Population", las=1)
+summary(log(gapminder$pop))
+```
+
+
+
+
+# Some Bivariate Summaries
+
+We may be interested in examining relationships between some of the variables.  Following are a few of interest.
+
+Note, we are ignoring the fact that the same countires have measurements taken for multiple years, for the time being...
+
+## Life Expectancy and GDP
+
+It is reasonable to hypothesize that these would be related.  Following is a visual examination of their relationship
+
+```{r, echo=FALSE, warning=FALSE}
+plot(gapminder$gdpPercap, gapminder$lifeExp)
+```
+
+Pearson's correlation:
+
+```{r, warning=FALSE}
+cor(gapminder$gdpPercap, gapminder$lifeExp)
+```
+
+It's not surprising to see they are associated.  It also isn't surprising to see that it is a non-liear relationship.
+
+First, let's calculate Spearman's correlation to address the non-linearity, as it does appear a monotonic association:
+
+```{r, warning=FALSE}
+cor(gapminder$gdpPercap, gapminder$lifeExp, method="spearman")
+```
+
+yup, it looks much more reasonable
+
+
+Let's look at the same plot, but this time using the log-GDP-per-capita, as it makes sense to examine it on this scale
+
+```{r, echo=FALSE, warning=FALSE}
+plot(log(gapminder$gdpPercap), gapminder$lifeExp)
+```
+
+That looks like it would be easier to model.  Let's also take a quick look at Pearson's correlation when we use log-GDP...
+
+```{r, warning=FALSE}
+cor(log(gapminder$gdpPercap), gapminder$lifeExp, method="pearson")
+```
+
+
+Let's not get carried away...we will stop here
+
+## Continent and GDP
+
+It is also reasonable to explore if GDP per captia varies by continent (again, ignoring the fact that we have measurements for multiple years)
+
+Let's look at a plot of this
+
+```{r, echo=FALSE, warning=FALSE}
+boxplot(gapminder$gdpPercap~gapminder$continent, ylab="GDP/cap", las=1)
+```
+
+We can see an associaition.  And as before, it may be more reasonable to examine GDP per capita on the _log-scale_ as this variable is a __rate__
+
+Let's look at that here...
+
+```{r, echo=FALSE, warning=FALSE}
+boxplot(log(gapminder$gdpPercap)~gapminder$continent, ylab="log-GDP/cap", las=1)
+```
+
+
+## No More...
+
+I wont get carried away, as the point of this exercise is working with R Markdown and Git(Hub), and not the actual data analysis...although, this is a *__VERY__* interesting dataset, and I will be exploring it further on my own, for myself :)
