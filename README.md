@@ -5,9 +5,11 @@ This is where my _homework_ will be stored.
 
 ## Repo Orientation
 
-This is currently a _work in progress_, and the location of files, etc, may shift around a bit.  Each assigbnment will be contained in a different folder.  Here you can find the [Homework 1 Files.](https://github.com/STAT545-UBC-hw-2019-20/stat545-hw-MarinStatsLectures/tree/master/hw01)   
+This is currently a _work in progress_, and the location of files, etc, may shift around a bit.  Each assigbnment will be contained in a different folder.  
 
-Aside from homework, you can find some [useful links here](https://github.com/MarinStatsLectures/STAT545-participation/blob/master/navigating_github.md).
+- Here you can find the [Homework 1 Files.](https://github.com/STAT545-UBC-hw-2019-20/stat545-hw-MarinStatsLectures/tree/master/hw01)   
+
+- Aside from homework, you can find some [useful links here](https://github.com/MarinStatsLectures/STAT545-participation/blob/master/navigating_github.md).
 
 ## Who am I?
 
