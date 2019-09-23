@@ -21,9 +21,11 @@ library(tidyverse)
 library(DT)
 ```
 
+$~$
 
 # Exercise 1
 
+$~$
 
 ## Part 1.1
 
@@ -132,7 +134,7 @@ $~$
 
 # Exercise #2
 
-## Part 2.1
+$~$
 
 Here, we will explore one _Categorical_ and one _Numeric_ variable using __dplyr__.  Do do so, we will calculate relevant numeric summaries, examine some plots, a produce frequency tables when appropriate.
 
@@ -211,6 +213,7 @@ gapminder %>%
 ```
 
 
+
 Let's look at a visual of the frequency table using a barplot:
 
 ```{r, warning=FALSE, message=FALSE}
@@ -225,3 +228,80 @@ gapminder %>%
   ylab("Number of Countries")
 ```
 
+
+$~$
+
+# Exercise #3
+
+$~$
+
+## Plot 1 - Examine Population Growth by Year
+
+To examine population growth by year I will look at the following.  First, I will plot populaton vs year, for each country.  I will also attempt to do this for each continent, to see how populatons are growing on each continent (this of course is not adjusted by land size, which would be meaningful to include)
+
+__Population groth by Country__
+
+The following looks at how populations are growing over the years, for each country.  Note that populaton is on the log-scale to account for exponential growth:
+
+```{r, warning=FALSE, message = FALSE}
+ggplot(gapminder, aes(x=year, y=pop, z=country)) +
+  scale_y_log10() +
+  geom_line(alpha = 0.2, colour="blue") +
+  theme_bw() +
+  ggtitle("Population, by Country and Year") +
+  ylab("Population")+
+  xlab("Year")
+```
+
+
+We can see from the above plot how populations are growing over time.  It may be more interesting to examing populaton growth by continent, so let's do that.
+
+*__let's come back to this later__*
+
+```{r put together continent level data}
+gapminder %>%
+  arrange(continent, year)
+```
+
+
+$~$
+
+## Plot 2 - Examine GDP/cap Distribution in 2007
+
+We will examione GDP Per Capita in 2007.  For the sake of documenting different forms of plots, I will progress through a series of plots, to display different featuers.  I will also do this mostly for myself so that I am able to praactice, and record different ways to do things.
+
+
+First, look at GDP Per Capita __separated by continent.__
+
+```{r}
+gapminder %>%
+  filter(year==2007) %>%
+  ggplot( aes(x=continent, y=gdpPercap)) +
+  geom_violin()
+```
+
+If we wanted to filter out Oceania as well, as they are made up of only 2 countries (I believe)...
+
+I will keep Oceania out of plots for the remainder of this exercise.
+
+```{r}
+gapminder %>%
+  filter(year==2007, continent != "Oceania") %>%
+  ggplot( aes(x=continent, y=gdpPercap)) +
+  geom_violin()
+```
+
+
+Note that we also wish to look at this on the log-scale... I will do that here.  I will also add in jitter points, and quartile lines (for my own exploration...)
+
+```{r}
+gapminder %>%
+  filter(year==2007, continent != "Oceania") %>%
+  ggplot( aes(x=continent, y=gdpPercap)) +
+  geom_violin(draw_quantiles = c(0.25, 0.5, 0.75)) +
+  geom_jitter(height = 0, width = 0.1) +
+  scale_y_log10() 
+```
+
+
+I would like to be able to scale the size of the plots to be proportional to their populaton sizes, althgouh I don't have time to figure that out right now.  I would have to create a new vector, I believe, that is the sum of all of the populaton sizes for each continent, and then use this in the "scale" argument...but I dont have time to figure out the nuances of that at the moment...
