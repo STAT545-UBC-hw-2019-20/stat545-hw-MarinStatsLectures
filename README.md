@@ -19,7 +19,7 @@ My name is _**Mike Marin**_ and I am a Senior Instructor at The University of Br
 
 I am taking STAT 545 to update my knowledge on R, mainly use of the __tidyverse__ .  When I was trained, RStudio didn't even exist!  I want to be able to pass on to my own students more modern ways of working in R, as I mainly code using base-R, although I don't want to be a dinosaur who says stuck in his old ways!
 
-I also have a [YouTube channel](www.youtube.com/marinstatlectures) introducing the use of R, which I have used for my statistics courses. They start at the very beginning, and assume very little knowledge of coding.  The channel also contains more advanced videos, as well as videos introducing statistics concepts at an introductory/indermediate level.
+I also have a [YouTube channel](https://www.youtube.com/marinstatlectures) introducing the use of R, which I have used for my statistics courses. They start at the very beginning, and assume very little knowledge of coding.  The channel also contains more advanced videos, as well as videos introducing statistics concepts at an introductory/indermediate level.
 
 One piece of adivce I will give for work/career (and this is partly to make use of a numbered list):
 
