@@ -1,0 +1,227 @@
+---
+title: "Homweork #2 - Welcome to the Tidyverse!"
+output: 
+  html_document:
+    keep_md: true
+editor_options: 
+  chunk_output_type: inline
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.width=5, fig.height=4)
+```
+
+
+
+```{r, warning = FALSE, message = FALSE, echo=FALSE}
+library(gapminder)
+library(tidyverse)
+library(DT)
+```
+
+
+# Exercise 1
+
+
+## Part 1.1
+
+Use __filter__ to select data for _Canada_, _United States_, and _Iran_, in the 1970's.  Make it into a __datatable__
+
+```{r}
+datatable(
+  gapminder %>%
+    filter(country=="Canada" | country=="United States" | country=="Iran" ) %>%
+    filter(year>1969 & year<1980)
+  )
+```
+
+
+$~$
+
+## Part 1.2
+
+Use a _pipe_ operator (%>%), and the _select_ command to select “country” and “gdpPercap” for the Part 1.1 data
+
+```{r}
+gapminder %>%
+  filter(country=="Canada" | country=="United States" | country=="Iran" ) %>%
+  filter(year>1969 & year<1980) %>%
+  select(country, gdpPercap)
+```
+
+
+$~$
+
+## Part 1.3
+
+Filter gapminder to all entries that have experienced a drop in life expectancy. Include a new variable that’s the increase/change in life expectancy in your tibble. Try using both lag() and diff().
+
+To do this, I am first arranging the data by country, and then by year...this way, i can take the difference (or the lag?) in successive entries.  I will have to exclude the first one for each country though, as this will be the last lifeExp of the preceeding country. (im sure there are more efficient ways to do this...)
+
+
+```{r}
+gapminder %>% 
+  arrange(country, year) %>% 
+  mutate(LifeExpIncrease= lifeExp-lag(lifeExp, 1)) %>% 
+  filter(LifeExpIncrease<0) 
+```
+
+
+Also, to be able to sort through and check this, I am also including a data table that includes _all_ changes in lifeExp (increase and decrese)...
+
+
+```{r}
+datatable(
+gapminder %>% 
+  arrange(country, year) %>% 
+  mutate(LifeExpIncrease= lifeExp-lag(lifeExp, 1))
+) 
+```
+
+
+And make it neater by rounding to 4 decimal places.
+
+```{r}
+datatable(
+gapminder %>% 
+  arrange(country, year) %>% 
+  mutate(LifeExpIncrease= round(lifeExp-lag(lifeExp, 1), digits=4))
+) 
+```
+
+$~$
+
+## Part 1.4
+
+I will group the data by country, then calculate the max GDP per capita for each country, and filter to select only the max rows.  I will also remove GDPperCap, but include the column "MaxGDPperCap" in there...
+
+
+```{r}
+gapminder %>% 
+  group_by(country) %>% 
+  mutate(maxgpdPercap = max(gdpPercap)) %>%
+  filter(gdpPercap==max(gdpPercap)) %>%
+  select(-gdpPercap)
+```
+
+$~$
+
+## Part 1.5
+
+Produce a plot of Canada’s life expectancy vs. GDP per capita, all within one pipe, first selectingthe relevant data, and then plotting it in ggplot2.  Plot GDP per capita on the log scale.
+
+
+```{r}
+gapminder %>%
+  filter(country=="Canada") %>%
+  ggplot(aes(gdpPercap, lifeExp)) +
+  geom_point(alpha = 0.5) +
+  scale_x_log10("GDP per capita", labels = scales::dollar_format()) +
+  theme_bw() +
+  ylab("Life Expectancy") +
+  ggtitle("Canada's Life Expectancy vs. GDP per capita") +
+  xlab("GDP per capita (log-scale") +
+  ylab("life expectancy")
+
+
+```
+
+$~$
+
+# Exercise #2
+
+## Part 2.1
+
+Here, we will explore one _Categorical_ and one _Numeric_ variable using __dplyr__.  Do do so, we will calculate relevant numeric summaries, examine some plots, a produce frequency tables when appropriate.
+
+I will select __life Expectancy__ as the _numeric_ variable, and __Country__ as the _categorical_ variable.
+
+### Numeric Variable - Life Expectancy
+
+First, let's look at some simple descriptive statistics:
+
+```{r}
+gapminder %>%
+  select(lifeExp) %>%
+  summary()
+```
+
+Missing from those summaries is the standard deviation.  The __SD of life expectancy is `r round( sd(gapminder$lifeExp), digits=2)`__.
+
+The __range of life expectancy is `r round( range(gapminder$lifeExp), digits=2)` = `r round( max(gapminder$lifeExp) - min(gapminder$lifeExp), digits=2)`__ , and the __interquartile range is `r round( quantile(gapminder$lifeExp, prob=0.75) - quantile(gapminder$lifeExp, prob=0.25), digits=2)`__
+
+Let's also take a look at the distribution of life expectancy (again, this is all ignoring the fact that these measurements come from multiple years, for different countries).
+
+#### Emperical Distribution of Life Expectancy
+
+Let's look at a histogram and density plot of Life Expectancy
+
+```{r, warning=FALSE, message = FALSE}
+gapminder %>%
+  ggplot(aes(lifeExp)) +
+  geom_histogram(aes(y=..density..), col="black",
+                 fill="white", alpha = .2) +
+  geom_density(col="blue")
+```
+
+
+
+#### Life Expectancy, by Year and Country 
+
+Here, let's expore life expectancy.  The following plot plots life expectancies over years.  Each line is for a different country, and the size of the line
+is proportional to the size of their population.
+
+I know that I shouldn't use all of these in a plot, but I wanted to get some practice with using different aspects of ggplot (i.e. the "population" size incroporated into the plot doesn't really add must, it probably takes away from the plot,... but i wanted to make sure I was able to include this sort of a feature in terms of how to code it up.)
+
+```{r, warning=FALSE, message = FALSE}
+ggplot(gapminder, aes(x=year, y=lifeExp, z=country, size=pop)) +
+  geom_line(alpha = 0.1) +
+  theme_bw() +
+  ggtitle("Life Expectancy, by Country and Year") +
+  ylab("Life Expectancy")+
+  xlab("Year")
+```
+
+
+$~$
+
+### Categorical Variable - Continent
+
+I'll mention here that it's a bit weird to summarize any of the categorical variables on their own, as they are simply a list of countries and continents.  So, what I will do is summarize things about a continent, regartding the other variables.
+
+
+In total, there are `r length(levels(gapminder$continent))` continents in total in this dataset.  
+
+The continents we have data for are: 
+
+  
+```{r}
+  levels(gapminder$continent)
+```
+ 
+It is of interest to know how many contries are in each of the continents.  Following is a table summarizing how many countries are in each of the continents.
+
+```{r, warning=FALSE, message=FALSE}
+gapminder %>%
+  filter(year == 2007) %>%
+  select(continent) %>%
+  table()
+```
+
+
+Let's look at a visual of the frequency table using a barplot:
+
+```{r, warning=FALSE, message=FALSE}
+gapminder %>%
+  filter(year == 2007) %>%
+  select(continent) %>%
+  ggplot() +
+  aes(continent) + 
+  geom_bar( col="blue", fill="black") + 
+  ggtitle("Number of Countries in Each Continent") +
+  xlab("Continent") +
+  ylab("Number of Countries")
+```
+
