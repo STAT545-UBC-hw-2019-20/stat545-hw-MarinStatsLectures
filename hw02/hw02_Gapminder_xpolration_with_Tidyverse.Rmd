@@ -21,11 +21,11 @@ library(tidyverse)
 library(DT)
 ```
 
-$~$
+
 
 # Exercise 1
 
-$~$
+
 
 ## Part 1.1
 
@@ -39,7 +39,7 @@ Use __filter__ to select data for _Canada_, _United States_, and _Iran_, in the 
 ```
 
 
-$~$
+
 
 ## Part 1.2
 
@@ -53,7 +53,7 @@ gapminder %>%
 ```
 
 
-$~$
+
 
 ## Part 1.3
 
@@ -92,7 +92,7 @@ gapminder %>%
   DT::datatable() 
 ```
 
-$~$
+
 
 ## Part 1.4
 
@@ -107,7 +107,7 @@ gapminder %>%
   select(-gdpPercap)
 ```
 
-$~$
+
 
 ## Part 1.5
 
@@ -129,11 +129,11 @@ gapminder %>%
 
 ```
 
-$~$
+
 
 # Exercise #2
 
-$~$
+
 
 Here, we will explore one _Categorical_ and one _Numeric_ variable using __dplyr__.  Do do so, we will calculate relevant numeric summaries, examine some plots, a produce frequency tables when appropriate.
 
@@ -186,7 +186,7 @@ ggplot(gapminder, aes(x=year, y=lifeExp, z=country, size=pop)) +
 ```
 
 
-$~$
+
 
 ### Categorical Variable - Continent
 
@@ -228,11 +228,11 @@ gapminder %>%
 ```
 
 
-$~$
+
 
 # Exercise #3
 
-$~$
+
 
 ## Plot 1 - Examine Population Growth by Year
 
@@ -291,7 +291,7 @@ gapminder %>%
 
 
 
-$~$
+
 
 ## Plot 2 - Examine GDP/cap Distribution in 2007
 
