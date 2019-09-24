@@ -1,11 +1,8 @@
 ---
 title: "Homweork #2 - Welcome to the Tidyverse!"
 output: 
-  html_document:
-    keep_md: true
+  github_document:
     toc: true
-editor_options: 
-  chunk_output_type: inline
 ---
 
 
