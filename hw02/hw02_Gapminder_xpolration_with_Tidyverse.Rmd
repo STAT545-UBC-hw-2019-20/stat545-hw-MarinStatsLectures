@@ -332,4 +332,10 @@ gapminder %>%
 
 I would like to be able to scale the size of the plots to be proportional to their populaton sizes, althgouh I don't have time to figure that out right now.  I would have to create a new vector, I believe, that is the sum of all of the populaton sizes for each continent, and then use this in the "scale" argument...but I dont have time to figure out the nuances of that at the moment...well, I know it would be sort of like I did in the previous plot with population size for continents, just isolating the 2007 year...but I will leave this exploration for another day.
 
+
+__This was a helpful resource for making some plots__
+
+https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf
+
+
 # The End :)
