@@ -33,7 +33,7 @@ Another sort of [helpful resource](https://www.datanovia.com/en/blog/ggplot-axis
 
 # The 3 Tasks
 
-## Option 5 - Life Expectancy by Continent
+## (1) Option 5 - Life Expectancy by Continent
 
 ### Intro
 
@@ -54,8 +54,8 @@ gapminder %>%
   DT::datatable()
 ```
 
-<!--html_preserve--><div id="htmlwidget-f099e6b2166e8184af44" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f099e6b2166e8184af44">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60"],["Africa","Africa","Africa","Africa","Africa","Africa","Africa","Africa","Africa","Africa","Africa","Africa","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Asia","Asia","Asia","Asia","Asia","Asia","Asia","Asia","Asia","Asia","Asia","Asia","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania"],[1952,1957,1962,1967,1972,1977,1982,1987,1992,1997,2002,2007,1952,1957,1962,1967,1972,1977,1982,1987,1992,1997,2002,2007,1952,1957,1962,1967,1972,1977,1982,1987,1992,1997,2002,2007,1952,1957,1962,1967,1972,1977,1982,1987,1992,1997,2002,2007,1952,1957,1962,1967,1972,1977,1982,1987,1992,1997,2002,2007],[39.136,41.266,43.319,45.335,47.451,49.58,51.593,53.345,53.63,53.598,53.325,54.806,53.28,55.96,58.399,60.411,62.395,64.392,66.229,68.091,69.568,71.15,72.422,73.608,46.314,49.319,51.563,54.664,57.319,59.611,62.618,64.851,66.537,68.021,69.234,70.728,64.409,66.703,68.539,69.738,70.775,71.938,72.806,73.642,74.44,75.505,76.701,77.649,69.255,70.295,71.085,71.31,71.91,72.855,74.29,75.32,76.945,78.19,79.74,80.719]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>continent<\/th>\n      <th>year<\/th>\n      <th>MeanLifeExpectancy<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+<!--html_preserve--><div id="htmlwidget-7719d865892512e19964" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7719d865892512e19964">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60"],["Africa","Africa","Africa","Africa","Africa","Africa","Africa","Africa","Africa","Africa","Africa","Africa","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Asia","Asia","Asia","Asia","Asia","Asia","Asia","Asia","Asia","Asia","Asia","Asia","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania"],[1952,1957,1962,1967,1972,1977,1982,1987,1992,1997,2002,2007,1952,1957,1962,1967,1972,1977,1982,1987,1992,1997,2002,2007,1952,1957,1962,1967,1972,1977,1982,1987,1992,1997,2002,2007,1952,1957,1962,1967,1972,1977,1982,1987,1992,1997,2002,2007,1952,1957,1962,1967,1972,1977,1982,1987,1992,1997,2002,2007],[39.136,41.266,43.319,45.335,47.451,49.58,51.593,53.345,53.63,53.598,53.325,54.806,53.28,55.96,58.399,60.411,62.395,64.392,66.229,68.091,69.568,71.15,72.422,73.608,46.314,49.319,51.563,54.664,57.319,59.611,62.618,64.851,66.537,68.021,69.234,70.728,64.409,66.703,68.539,69.738,70.775,71.938,72.806,73.642,74.44,75.505,76.701,77.649,69.255,70.295,71.085,71.31,71.91,72.855,74.29,75.32,76.945,78.19,79.74,80.719]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>continent<\/th>\n      <th>year<\/th>\n      <th>MeanLifeExpectancy<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
 
 
 Let's take a look at one plot of that data...
@@ -199,7 +199,7 @@ gapminder %>%
 We can see trends well in this plot...
 
 
-## Option 1 (slightly revised)
+## (2) Option 1 (slightly revised)
 
 ### Intro
 
@@ -315,7 +315,7 @@ gapminder %>%
 
 
 
-## Option 6 - Interesting Stories
+## (3) Option 6 - Interesting Stories
 
 ### Intro
 
@@ -360,8 +360,8 @@ gapminder %>%
   DT::datatable()
 ```
 
-<!--html_preserve--><div id="htmlwidget-529bf7d65137a4c5cdc7" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-529bf7d65137a4c5cdc7">{"x":{"filter":"none","data":[["1","2"],["Rwanda","Cambodia"],["Africa","Asia"],[1992,1977],[23.599,31.22],[7290203,6978607],[737.0685949,524.9721832]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>country<\/th>\n      <th>continent<\/th>\n      <th>year<\/th>\n      <th>lifeExp<\/th>\n      <th>pop<\/th>\n      <th>gdpPercap<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+<!--html_preserve--><div id="htmlwidget-f69f8b7519c5e33f7efe" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f69f8b7519c5e33f7efe">{"x":{"filter":"none","data":[["1","2"],["Rwanda","Cambodia"],["Africa","Asia"],[1992,1977],[23.599,31.22],[7290203,6978607],[737.0685949,524.9721832]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>country<\/th>\n      <th>continent<\/th>\n      <th>year<\/th>\n      <th>lifeExp<\/th>\n      <th>pop<\/th>\n      <th>gdpPercap<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
 
 
 The two are Rwanda with a big event in 1992, and Cambodia with a big event in 1977 (and preceeding years as well).

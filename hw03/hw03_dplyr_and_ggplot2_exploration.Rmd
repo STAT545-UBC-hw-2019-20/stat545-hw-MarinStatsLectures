@@ -42,7 +42,7 @@ Another sort of [helpful resource](https://www.datanovia.com/en/blog/ggplot-axis
 
 # The 3 Tasks
 
-## Option 5 - Life Expectancy by Continent
+## (1) Option 5 - Life Expectancy by Continent
 
 ### Intro
 
@@ -186,7 +186,7 @@ gapminder %>%
 We can see trends well in this plot...
 
 
-## Option 1 (slightly revised)
+## (2) Option 1 (slightly revised)
 
 ### Intro
 
@@ -256,7 +256,7 @@ gapminder %>%
 
 
 
-## Option 6 - Interesting Stories
+## (3) Option 6 - Interesting Stories
 
 ### Intro
 
