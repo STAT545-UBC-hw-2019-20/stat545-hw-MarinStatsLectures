@@ -25,11 +25,23 @@ In this assignment, we will explore more about _dplyr_ and _ggplot2_.  The focus
 
 I will write things up more step-by-step, as I explore the tools.  I am writing this in a way to document for myself, how to do things, and the different options available.
 
+I will be using different themes, etc, for plots.  While the plots will not have a consistent feel, this is because I want to explore different options for plotting.
+
 ## Some Resources
 
 A resource I will be making heavy use of is the [ggplot2 Cheat Sheet by RStudio](https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
 
 Another sort of [helpful resource](https://www.datanovia.com/en/blog/ggplot-axis-ticks-set-and-rotate-text-labels/) was this one
+
+I used this one slightly, but [Jenny's Tutorial for GGPLOT2](https://github.com/jennybc/ggplot2-tutorial) has some good stuff in it!
+
+I didn't look at this one, but archiving it here.  All [about data-vis](https://r4ds.had.co.nz/data-visualisation.html)...
+
+This is [Hadley Wickham's resource](http://webcat2.library.ubc.ca/vwebv/holdingsInfo?bibId=8489511) for ggplot2.
+
+Another [Cookbook](http://www.cookbook-r.com/Graphs/) I didn't look at, but archiving here.
+
+
 
 # The 3 Tasks
 
@@ -54,8 +66,8 @@ gapminder %>%
   DT::datatable()
 ```
 
-<!--html_preserve--><div id="htmlwidget-7719d865892512e19964" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7719d865892512e19964">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60"],["Africa","Africa","Africa","Africa","Africa","Africa","Africa","Africa","Africa","Africa","Africa","Africa","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Asia","Asia","Asia","Asia","Asia","Asia","Asia","Asia","Asia","Asia","Asia","Asia","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania"],[1952,1957,1962,1967,1972,1977,1982,1987,1992,1997,2002,2007,1952,1957,1962,1967,1972,1977,1982,1987,1992,1997,2002,2007,1952,1957,1962,1967,1972,1977,1982,1987,1992,1997,2002,2007,1952,1957,1962,1967,1972,1977,1982,1987,1992,1997,2002,2007,1952,1957,1962,1967,1972,1977,1982,1987,1992,1997,2002,2007],[39.136,41.266,43.319,45.335,47.451,49.58,51.593,53.345,53.63,53.598,53.325,54.806,53.28,55.96,58.399,60.411,62.395,64.392,66.229,68.091,69.568,71.15,72.422,73.608,46.314,49.319,51.563,54.664,57.319,59.611,62.618,64.851,66.537,68.021,69.234,70.728,64.409,66.703,68.539,69.738,70.775,71.938,72.806,73.642,74.44,75.505,76.701,77.649,69.255,70.295,71.085,71.31,71.91,72.855,74.29,75.32,76.945,78.19,79.74,80.719]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>continent<\/th>\n      <th>year<\/th>\n      <th>MeanLifeExpectancy<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+<!--html_preserve--><div id="htmlwidget-30fbc1a9465ad9909501" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-30fbc1a9465ad9909501">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60"],["Africa","Africa","Africa","Africa","Africa","Africa","Africa","Africa","Africa","Africa","Africa","Africa","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Americas","Asia","Asia","Asia","Asia","Asia","Asia","Asia","Asia","Asia","Asia","Asia","Asia","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Europe","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania","Oceania"],[1952,1957,1962,1967,1972,1977,1982,1987,1992,1997,2002,2007,1952,1957,1962,1967,1972,1977,1982,1987,1992,1997,2002,2007,1952,1957,1962,1967,1972,1977,1982,1987,1992,1997,2002,2007,1952,1957,1962,1967,1972,1977,1982,1987,1992,1997,2002,2007,1952,1957,1962,1967,1972,1977,1982,1987,1992,1997,2002,2007],[39.136,41.266,43.319,45.335,47.451,49.58,51.593,53.345,53.63,53.598,53.325,54.806,53.28,55.96,58.399,60.411,62.395,64.392,66.229,68.091,69.568,71.15,72.422,73.608,46.314,49.319,51.563,54.664,57.319,59.611,62.618,64.851,66.537,68.021,69.234,70.728,64.409,66.703,68.539,69.738,70.775,71.938,72.806,73.642,74.44,75.505,76.701,77.649,69.255,70.295,71.085,71.31,71.91,72.855,74.29,75.32,76.945,78.19,79.74,80.719]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>continent<\/th>\n      <th>year<\/th>\n      <th>MeanLifeExpectancy<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
 
 
 Let's take a look at one plot of that data...
@@ -308,7 +320,8 @@ gapminder %>%
   geom_point(size=3) +
   labs(title="Proportion of Countries in a Continent with LifeExp>65", x="Year", y="Proportion with Life Expectancy over 65") +
   scale_x_continuous(breaks=seq(1952,2007,5), labels=seq(1952,2007,5)) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1, size=6))
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1, size=6)) +
+  ggthemes::theme_economist()
 ```
 
 ![](hw03_dplyr_and_ggplot2_exploration_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
@@ -360,8 +373,8 @@ gapminder %>%
   DT::datatable()
 ```
 
-<!--html_preserve--><div id="htmlwidget-f69f8b7519c5e33f7efe" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f69f8b7519c5e33f7efe">{"x":{"filter":"none","data":[["1","2"],["Rwanda","Cambodia"],["Africa","Asia"],[1992,1977],[23.599,31.22],[7290203,6978607],[737.0685949,524.9721832]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>country<\/th>\n      <th>continent<\/th>\n      <th>year<\/th>\n      <th>lifeExp<\/th>\n      <th>pop<\/th>\n      <th>gdpPercap<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+<!--html_preserve--><div id="htmlwidget-d55e8af6226da7c22482" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d55e8af6226da7c22482">{"x":{"filter":"none","data":[["1","2"],["Rwanda","Cambodia"],["Africa","Asia"],[1992,1977],[23.599,31.22],[7290203,6978607],[737.0685949,524.9721832]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>country<\/th>\n      <th>continent<\/th>\n      <th>year<\/th>\n      <th>lifeExp<\/th>\n      <th>pop<\/th>\n      <th>gdpPercap<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
 
 
 The two are Rwanda with a big event in 1992, and Cambodia with a big event in 1977 (and preceeding years as well).
@@ -460,14 +473,14 @@ gapminder %>%
   geom_line(alpha=0.5, size=2) +
   labs(title="Life Expectancy for Vietnam and Cambodia", x="Year", y="Life Expectancy (years)") +
   scale_x_continuous(breaks=seq(1952,2007,5), labels=seq(1952,2007,5)) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1, size=6)) +
-  theme_gray()
+  ggthemes::theme_fivethirtyeight() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1, size=6))
 ```
 
 ![](hw03_dplyr_and_ggplot2_exploration_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
 
 
-Quite interesting to see that Vietnam does not appear to be affected at the same time.  Unclear on the reason for this?  Maybe they had fewere causauties...not a likely reason.  Maybe their population is much larger, and so it had a smaller effect...also not that likely. Maybe the data the governemnt in Vietnam is releasing at the time is not very reliable or accurate...seems reasonable.
+Quite interesting to see that Vietnam does not appear to be affected at the same time.  Unclear on the reason for this?  Maybe they had fewer casualties...not a likely reason.  Maybe their population is much larger, and so it had a smaller effect...also not that likely. Maybe the data the governemnt in Vietnam is releasing at the time is not very reliable or accurate...this is possible.  These are all speculation, and it woudl be interesting to investigate this further.
 
 Either way, we don't know why we dont see the same pattern in Vietnam as we do in Cambodia.  This would require more (non-statistical) research which I'm not going to do.
 
@@ -485,8 +498,8 @@ gapminder %>%
   labs(title="Population for Vietnam and Cambodia", x="Year", y="Population") +
   scale_x_continuous(breaks=seq(1952,2007,5), labels=seq(1952,2007,5)) +
   scale_y_log10(labels=scales::comma_format()) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1, size=6)) +
-  theme_gray()
+  ggthemes::theme_solarized() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1, size=6))
 ```
 
 ![](hw03_dplyr_and_ggplot2_exploration_files/figure-html/unnamed-chunk-19-1.png)<!-- -->

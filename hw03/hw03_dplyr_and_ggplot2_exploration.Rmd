@@ -20,6 +20,7 @@ library(tidyverse)
 library(DT)
 library(knitr)
 library(ggridges)
+library(ggthemes) #for diff themes on plots
 ```
 
 
@@ -34,11 +35,23 @@ In this assignment, we will explore more about _dplyr_ and _ggplot2_.  The focus
 
 I will write things up more step-by-step, as I explore the tools.  I am writing this in a way to document for myself, how to do things, and the different options available.
 
+I will be using different themes, etc, for plots.  While the plots will not have a consistent feel, this is because I want to explore different options for plotting.
+
 ## Some Resources
 
 A resource I will be making heavy use of is the [ggplot2 Cheat Sheet by RStudio](https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
 
 Another sort of [helpful resource](https://www.datanovia.com/en/blog/ggplot-axis-ticks-set-and-rotate-text-labels/) was this one
+
+I used this one slightly, but [Jenny's Tutorial for GGPLOT2](https://github.com/jennybc/ggplot2-tutorial) has some good stuff in it!
+
+I didn't look at this one, but archiving it here.  All [about data-vis](https://r4ds.had.co.nz/data-visualisation.html)...
+
+This is [Hadley Wickham's resource](http://webcat2.library.ubc.ca/vwebv/holdingsInfo?bibId=8489511) for ggplot2.
+
+Another [Cookbook](http://www.cookbook-r.com/Graphs/) I didn't look at, but archiving here.
+
+
 
 # The 3 Tasks
 
@@ -251,7 +264,8 @@ gapminder %>%
   geom_point(size=3) +
   labs(title="Proportion of Countries in a Continent with LifeExp>65", x="Year", y="Proportion with Life Expectancy over 65") +
   scale_x_continuous(breaks=seq(1952,2007,5), labels=seq(1952,2007,5)) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1, size=6))
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1, size=6)) +
+  ggthemes::theme_economist()
 ```
 
 
@@ -384,12 +398,12 @@ gapminder %>%
   geom_line(alpha=0.5, size=2) +
   labs(title="Life Expectancy for Vietnam and Cambodia", x="Year", y="Life Expectancy (years)") +
   scale_x_continuous(breaks=seq(1952,2007,5), labels=seq(1952,2007,5)) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1, size=6)) +
-  theme_gray()
+  ggthemes::theme_fivethirtyeight() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1, size=6))
 ```
 
 
-Quite interesting to see that Vietnam does not appear to be affected at the same time.  Unclear on the reason for this?  Maybe they had fewere causauties...not a likely reason.  Maybe their population is much larger, and so it had a smaller effect...also not that likely. Maybe the data the governemnt in Vietnam is releasing at the time is not very reliable or accurate...seems reasonable.
+Quite interesting to see that Vietnam does not appear to be affected at the same time.  Unclear on the reason for this?  Maybe they had fewer casualties...not a likely reason.  Maybe their population is much larger, and so it had a smaller effect...also not that likely. Maybe the data the governemnt in Vietnam is releasing at the time is not very reliable or accurate...this is possible.  These are all speculation, and it woudl be interesting to investigate this further.
 
 Either way, we don't know why we dont see the same pattern in Vietnam as we do in Cambodia.  This would require more (non-statistical) research which I'm not going to do.
 
@@ -406,8 +420,8 @@ gapminder %>%
   labs(title="Population for Vietnam and Cambodia", x="Year", y="Population") +
   scale_x_continuous(breaks=seq(1952,2007,5), labels=seq(1952,2007,5)) +
   scale_y_log10(labels=scales::comma_format()) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1, size=6)) +
-  theme_gray()
+  ggthemes::theme_solarized() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1, size=6))
 ```
 
 
