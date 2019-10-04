@@ -13,6 +13,10 @@ This is currently a _work in progress_, and the location of files, etc, may shif
 
 - Here you can find the [Homework 3 Files.](https://github.com/STAT545-UBC-hw-2019-20/stat545-hw-MarinStatsLectures/tree/master/hw03) 
 
+- Here you can find the [Homework 4 Files.](https://github.com/STAT545-UBC-hw-2019-20/stat545-hw-MarinStatsLectures/tree/master/hw04) 
+
+- Here you can find the [Homework 5 Files.](https://github.com/STAT545-UBC-hw-2019-20/stat545-hw-MarinStatsLectures/tree/master/hw05) 
+
 - Aside from homework, you can find some [useful links here](https://github.com/MarinStatsLectures/STAT545-participation/blob/master/navigating_github.md).
 
 ## Who am I?
