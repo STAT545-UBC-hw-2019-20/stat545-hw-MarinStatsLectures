@@ -1,0 +1,155 @@
+---
+title: "Assignment 4 - Tidy Data"
+author: "Mike Marin"
+output: 
+  html_document:
+    keep_md: true
+    toc: true
+    toc_float: true
+    #number_sections: true
+    theme: cerulean
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.width=7, fig.height=5)
+```
+
+```{r, warning = FALSE, message = FALSE, echo=FALSE}
+library(gapminder)
+library(tidyverse)
+library(knitr)
+library(DT)
+```
+
+
+
+# Introduction
+
+This document is for Assignment #4.  The goal of this assignment is to work with __tidyr__ to make _tidy data_.  
+
+The assignment consists of choosing an _option_ of different tasks to preform, and 3 different tasks.  These are done below.
+
+Through peer- reviews, I've learned about making the table of contents _foalting_, so I'm excited to try that out here...
+
+# Exercise 1 - Univariate Data Reshaping
+
+Here, we are given two options to choose from.  I am choosing to do __Univariate Option 1__.  I will carry out 3 tasks here.
+
+## Part 1.1 - Widening
+
+Here, we will work with the _gapminder_ dataset.  I will take the data (which is already in tidy format), and reshape it to have one row per year, and columns for life expectancy, for _Canada_, _America_, and _Mexico_.
+
+This will be made into a tibble and displayed as a _datatable_.
+
+```{r}
+CMA_lifeExp <- gapminder %>% 
+  filter(country=="Canada" 
+         | country=="United States" 
+         | country=="Mexico") %>% 
+  pivot_wider(id_cols = year, names_from = country, 
+              values_from = lifeExp) 
+DT::datatable(CMA_lifeExp)
+```
+
+
+## Part 1.2 - Make a Plot
+
+Here, we will use this _widened_ data to make a plot comparing the life expectancies of Canada, USA, and Mexico.
+
+Since I have selected 3 countries, and I am interpreting the task as to plot x=country1 and y=country2, I will select one pair of countries (Canada and Mexico) for which to make the plot. (NOTE: the question could also be interpreted as wanting to plot life expectancies, over time, for multiple countries on the same plot.  I will _not_ be making such a plot)
+
+```{r}
+CMA_lifeExp %>% 
+  ggplot(aes(x=Canada, y=Mexico)) +
+  geom_point(size=3) +
+  geom_line(size=2, alpha=0.2, colour="blue") +
+  ggtitle("Canada vs Mexico Life Expectancy, from 1952-2007") +
+  xlab("Canada Life Expectancy (years)") +
+  ylab("Mexico Life Expectancy (years)" ) +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  ggthemes::theme_economist()
+
+```
+
+As one would expect, there are highly correlated. 
+
+
+## Part 1.3 - Re-Lengthen
+
+Now, let's put the data back the way it was... in other words, let's re-lengthen it...
+
+```{r Q1.3}
+CMA_lifeExp %>% 
+  pivot_longer(cols = c("Canada", 
+                        "United States", "Mexico"), 
+               names_to = "country", 
+               values_to = "lifeExp") %>% 
+  arrange(country) %>%
+  DT::datatable()
+```
+
+
+# Exercise 2 - Multivariate Data Reshaping
+
+Here, we are given two options to choose from.  I am choosing to do __Multivariate Option 1__.  I will carry out 3 tasks here.
+
+I have chosen this task as it is a continuation of what was done in Exercise 1.
+
+
+## Part 2.1 - Widening
+
+Here, we will work with the _gapminder_ dataset.  I will make a tibble with one row per year, and columns for life expectancy and GDP per capita.
+
+Like before, I willuse countries of Canada, USA, and Mexico.  I will select numeric variables of _population_ and _gdpPerCapita_.
+
+
+```{r}
+CMA_lifeExp_multi <- gapminder %>% 
+  filter(country=="Canada" 
+         | country=="United States" 
+         | country=="Mexico") %>% 
+  pivot_wider(id_cols = year, names_from = country, 
+              values_from = c("pop", "gdpPercap"))
+
+DT::datatable(CMA_lifeExp_multi)
+```
+
+
+## Part 2.2 - Lengthening
+
+Now, we will relengthen the data
+
+```{r}
+CMA_lifeExp_multi %>% 
+  pivot_longer(cols = -year,
+               names_to = c(".value", "country"),
+               names_sep = "_" ) %>% 
+  arrange(country) %>% 
+  DT::datatable()
+```
+
+
+
+# Exercise 3 - Joining Tables
+
+Here there is no choice, we will work through all activities listed.  The goal is to work with _tidyr_ and _dplyr_ to work with _table joins_.
+
+To do so, we will be working with the following made up data:
+
+```{r, message=FALSE}
+guest <- read_csv("https://raw.githubusercontent.com/STAT545-UBC/Classroom/master/data/wedding/attend.csv")
+email <- read_csv("https://raw.githubusercontent.com/STAT545-UBC/Classroom/master/data/wedding/emails.csv")
+```
+
+
+
+## Part 3.1 
+
+The task here is:  For each guest in the guestlist (guest tibble), add a column for email address, which can be found in the email tibble.
+
+
+
+
+
+
