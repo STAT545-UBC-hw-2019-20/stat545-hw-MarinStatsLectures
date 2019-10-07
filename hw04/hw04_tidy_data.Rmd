@@ -3,7 +3,6 @@ title: "Assignment 4 - Tidy Data"
 author: "Mike Marin"
 output: 
   html_document:
-    keep_md: true
     toc: true
     toc_float: true
     #number_sections: true
@@ -30,7 +29,7 @@ This document is for Assignment #4.  The goal of this assignment is to work with
 
 The assignment consists of choosing an _option_ of different tasks to preform, and 3 different tasks.  These are done below.
 
-Through peer- reviews, I've learned about making the table of contents _foalting_, so I'm excited to try that out here...
+Through peer- reviews, I've learned about making the table of contents _foalting_, so I'm going to try that out here...I will note that it actualyl doesn't look very aesthetically pleasing, and some fo the text is off screen and you have to scroll right to see it...but im keeping it this way for now, so that I have documented for myself an example of how to get this sort of TOC done.
 
 # Exercise 1 - Univariate Data Reshaping
 
@@ -133,21 +132,78 @@ CMA_lifeExp_multi %>%
 
 # Exercise 3 - Joining Tables
 
-Here there is no choice, we will work through all activities listed.  The goal is to work with _tidyr_ and _dplyr_ to work with _table joins_.
+Here there are no choices to be made, we will work through all activities listed.  The goal is to work with _tidyr_ and _dplyr_ to work with _table joins_.
 
 To do so, we will be working with the following made up data:
 
 ```{r, message=FALSE}
-guest <- read_csv("https://raw.githubusercontent.com/STAT545-UBC/Classroom/master/data/wedding/attend.csv")
-email <- read_csv("https://raw.githubusercontent.com/STAT545-UBC/Classroom/master/data/wedding/emails.csv")
+guest_data <- read_csv("https://raw.githubusercontent.com/STAT545-UBC/Classroom/master/data/wedding/attend.csv")
+email_data <- read_csv("https://raw.githubusercontent.com/STAT545-UBC/Classroom/master/data/wedding/emails.csv")
 ```
 
+First, let's just take a look at these data in tibbles, so we can see what we're working with, and how we are going to go about thigns...
+
+```{r}
+guest_data %>%
+DT::datatable()
+```
+
+
+```{r}
+DT::datatable(email_data)
+```
+
+
+We can see that the _email_ tibble has all guests that are part of the same party in one row, separated by commas, so first we should get each of them into their own row. We shoudl also rename the varaible __"guest"__ to __name__ so that the two tibbles have corresponding variable names. 
+
+```{r separate email rows}
+email_new <- email_data %>% 
+  separate_rows(guest, sep = ", ") %>%
+  rename(name=guest)
+DT::datatable(email_new)
+```
+
+Ok, this should be easier to work with...
+
+Also, worth noting that a _stupid_ __*white space*__ gave me so many head aches...the sep needed is ", ", not ",", as there is a space after the comma...jut a note for future to be midnful of this...
 
 
 ## Part 3.1 
 
 The task here is:  For each guest in the guestlist (guest tibble), add a column for email address, which can be found in the email tibble.
 
+
+```{r}
+left_join(guest_data, email_new, by="name") %>%
+  select(party, name, email) %>%
+  DT::datatable()
+```
+
+
+We can see that some guests have not provided us with their email address...probably a good idea, so we don't spam them ;)
+
+
+## Part 3.2 
+
+Who do we have emails for, yet are not on the guest list.  And more importantly, why do we have their emails if they werent invited!  Wedding crashers!
+
+```{r}
+email_new %>%
+  anti_join(guest_data, by="name") %>%
+  DT::datatable()
+```
+
+Here we see our 3 wedding crashers: the Jones' and the Marshalls!
+
+
+## Part 3.3
+
+Here, we will make a guestlist that includes everyone we have emails for (in addition to those on the original guestlist).  That is, we will take the original guest list __(guest_data)__ , and add to it anything from the __(email_new)__ list, using a _fulljoin_.
+
+```{r}
+full_join(guest_data, email_new, by="name") %>%
+  DT::datatable()
+```
 
 
 
