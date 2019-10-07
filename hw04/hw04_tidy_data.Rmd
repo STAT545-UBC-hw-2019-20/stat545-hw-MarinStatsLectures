@@ -29,7 +29,7 @@ This document is for Assignment #4.  The goal of this assignment is to work with
 
 The assignment consists of choosing an _option_ of different tasks to preform, and 3 different tasks.  These are done below.
 
-Through peer- reviews, I've learned about making the table of contents _foalting_, so I'm going to try that out here...I will note that it actualyl doesn't look very aesthetically pleasing, and some fo the text is off screen and you have to scroll right to see it...but im keeping it this way for now, so that I have documented for myself an example of how to get this sort of TOC done.
+Through peer-reviews, I've learned about making the table of contents _floating_, so I'm going to try that out here...I will note that it actually doesn't look very aesthetically pleasing, and some of the text is off screen and you have to scroll right to see it...but im keeping it this way for now, so that I have documented for myself an example of how to get this sort of TOC done.
 
 # Exercise 1 - Univariate Data Reshaping
 
@@ -100,7 +100,7 @@ I have chosen this task as it is a continuation of what was done in Exercise 1.
 
 Here, we will work with the _gapminder_ dataset.  I will make a tibble with one row per year, and columns for life expectancy and GDP per capita.
 
-Like before, I willuse countries of Canada, USA, and Mexico.  I will select numeric variables of _population_ and _gdpPerCapita_.
+Like before, I will use countries of Canada, USA, and Mexico.  I will select numeric variables of _population_ and _gdpPerCapita_.
 
 
 ```{r}
@@ -117,7 +117,7 @@ DT::datatable(CMA_lifeExp_multi)
 
 ## Part 2.2 - Lengthening
 
-Now, we will relengthen the data
+Now, we will re-lengthen the data
 
 ```{r}
 CMA_lifeExp_multi %>% 
@@ -140,6 +140,7 @@ To do so, we will be working with the following made up data:
 guest_data <- read_csv("https://raw.githubusercontent.com/STAT545-UBC/Classroom/master/data/wedding/attend.csv")
 email_data <- read_csv("https://raw.githubusercontent.com/STAT545-UBC/Classroom/master/data/wedding/emails.csv")
 ```
+
 
 First, let's just take a look at these data in tibbles, so we can see what we're working with, and how we are going to go about thigns...
 
