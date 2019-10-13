@@ -1,0 +1,373 @@
+---
+title: "Assignment 5 - Import/Export Data, Here, and Factors"
+author: "Mike Marin"
+output: 
+  html_document:
+    toc: true
+    #number_sections: true
+    theme: cerulean
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.width=7, fig.height=5)
+```
+
+```{r, warning = FALSE, message = FALSE, echo=FALSE}
+library(gapminder)
+library(tidyverse)
+library(knitr)
+library(DT)
+library(forcats)
+library(dplyr)
+```
+
+
+
+# Introduction
+
+This document is for Assignment #5.  The goal of this assignment is to import/export data and make use of the _here_ package, to improve the quality of plots, and to take _control_ of __*factors*__.  
+
+
+
+# Exercise 1 - here::here , class is now in session!
+
+Here, we will discuss the value of the __here__ package.  
+
+__Before Reading the Blog:__  The value of this package is in specifying the path to a file, when collaborating with others.  It doesn't seem to add a ton of value when working completely on your own, but can can make your script a bit more user friendly when passing scripts along to others as may be using a different OS or may organize files/directories in a diffrernt way.  I've always began a script with a __where <- path.to.things__ and then used this in what follows...allowing myself/others to change the _where_ in the __setwd( where )__.  But, I'm going to read this blog, and see the authors view on the value it adds.
+
+__From Reading the Blog:__  It suggests to use __Rprojects__ and the __here()__ command.  The Rproject creates a working directory where the project is...you can also set R up to clean up the workspace for a new project.  The value in __here()__ is that it makes your script platform independent (for all those Windows users...bless their souls).  It puts a _.here_ extension on Rproject files, so that R knows where to look for them, and can find them regardless of where they are saved.  
+
+It is worth noting that this is very similar to the __file.path()__ command in base R.
+
+A nice thing about _here_ is that if you move a file, this wont cause a problem with here...it will still find it without specifying a new path.
+
+If you've set a working directory, _here()_ will still be the priority, and wont be thrown off by the _setwd()_.  And you can use *set_here()* if you wanted to set the "working directory" for here().
+
+Overall, it just makes things a bit safer and user-friendly.  The biggest benefit is with collaborative work.  When working only yourself, it still adds a benefit that if files/directories get shifted around, your code will still run without having to tell R the new path to a file.  This does add a benefit, as we do tend to clean up our work, move some work to "archived" folders, etc.
+
+
+
+# Exercise 2 - Factor Management
+
+For this exercise, we will use the __*gapminder*__ dataset.  Yes, this is an unoriginal choice, but I find this data interesting, and I'm also pretty familiar with it by now and don't have to spend time getting familiar with data, and can focus on the technical content of the course.
+
+First, let's confirm that both _continent_ and _country_ are both factors, as we will be working with both of these.
+
+```{r}
+class(gapminder$continent)
+class(gapminder$country)
+# or, to get really specific...
+is.factor(gapminder$continent)
+is.factor(gapminder$country)
+```
+
+
+And before we get to dropping Oceania, note the total number of rows in the data.
+
+```{r}
+nrow(gapminder)
+```
+
+
+
+## Drop Oceania...
+
+First, let's create a new dataframe (excuse me, a tibble...), with Oceania removed...
+
+```{r}
+NewGap <- gapminder %>%
+  filter(continent != "Oceania")
+nrow(NewGap)
+```
+
+We can see that there are `r nrow(NewGap)` rows in the data after removing Oceania.... there have been `r nrow(gapminder)-nrow(NewGap)` rows dropped.
+
+
+We now have data with __Oceania__ removed, BUT...we can notice that the
+variable _continent_ still has Oceania as one of the levels:
+
+```{r}
+levels(NewGap$continent)
+nlevels(NewGap$continent)
+```
+
+So, let's go ahead and have that level dropped.  And I will create __NewGap__ _again_.  I will note that this is not necessary (we could just pipe in the NewGap and then droplevels()), but I'm doing this as it really should have all been done in one step, and I did this in small increments to demonstrate (mostly for myself) how removing Oceania from the data didn't remove it as a level from the continent variable...
+
+
+```{r}
+NewGap <- gapminder %>%
+  filter(continent != "Oceania") %>%
+  droplevels()
+```
+
+
+Now, if we check the levels for continent (within the NewGap data), we will see that the level has been dropped...
+
+```{r}
+levels(NewGap$continent)
+nlevels(NewGap$continent)
+```
+
+
+
+## Re-order Levels of some Factor(s)
+
+The question here reads as:  "Reorder the levels of country or continent. Use the forcats package to change the order of the factor levels, based on summarized information of one of the quantitative variables. Consider experimenting with a summary statistic beyond the most basic choice of the mean/median. Use the forcats package in the tidyverse for this, rather than the baseR function as.factor."
+
+When doing this, I may create __*New*__ variables that are reordered versions of the factors, when it makes sense to do so.  I know that this is not necessary to do, but I want to be able to easily make side-by-side plots comparing the original version vs the reordered version of the factors, and this will make it easier for doing do (although not necessary).
+
+Let's __reorder continent by population in 2007_ and then look at a plot of the total population per continent.  To do this, we will first have to _group_by()_ continent and calculate the sum of population for each continent there.  We will then make a plot of this.  For this task, I will bring Oceania back as they deserve to be in there mate!
+
+```{r, warning=FALSE, message=FALSE, fig.width=10, fig.height=7}
+Gap2 <- gapminder %>% 
+  filter(year==2007) %>%
+  group_by(continent) %>% 
+  summarize(TotalPop = sum(pop, na.rm=T)/1000000)
+
+plot1 <- Gap2 %>%
+  ggplot() +
+  geom_col(aes(x=continent, y=TotalPop, fill=continent)) +
+  coord_flip()+
+  theme_bw() +
+  ggtitle("Population, by Continent in 2007, Unordered Factor") +
+  ylab("Continent") +
+  xlab("Total Population (million)") +
+  coord_flip() +
+  theme_bw() +
+  theme(axis.text.y = element_text(angle = 45, vjust = 0, 
+                                   hjust=0.5, size=5))
+
+plot2 <- Gap2 %>%
+  ggplot() +
+  geom_col(aes(x=fct_reorder(continent, -TotalPop), y=TotalPop, fill=continent)) +
+  coord_flip()+
+  theme_bw() +
+  ggtitle("Population, by Continent in 2007, Factor Ordered by Total Population") +
+  ylab("Continent") +
+  xlab("Total Population (million)") +
+  coord_flip() +
+  theme_bw() +
+  theme(axis.text.y = element_text(angle = 45, vjust = 0,
+                                   hjust=0.5, size=5))
+
+gridExtra::grid.arrange(plot1, plot2, nrow=2)
+```
+
+
+Let's also look at the results of __arrange__ on the original factor as well as the reordered one.
+
+First, let's see the original factor.
+
+```{r}
+DT::datatable(Gap2)
+```
+
+
+Now, let's look at that factor arranged by __TotalPop__, from largest to smallest.
+
+```{r}
+Gap2 %>%
+  arrange(-TotalPop) %>%
+  DT::datatable()
+```
+
+
+
+
+# Exercise 3 - File Input and Output
+
+The question read as:  Task: Experiment with at least one of:
+
+- write_csv()/read_csv() (and/or TSV friends),
+- saveRDS()/readRDS(),
+- dput()/dget().
+
+
+## Make Something New
+
+First, I will make a small addition to the _gapminder_ data.  Then I will export that data, and re-import it.
+
+I will add a new column to the data of __GDP__, and I will also filter it to have this only for 2007, and arrange it by continent. I will save this in a new tibble called __ModifiedGapminder__.
+
+```{r}
+ModifiedGapminder <- gapminder %>%
+  filter(year==2007) %>%
+  arrange(country) %>%
+  mutate(GDP100mill = round((gdpPercap*pop)/100000000, digits=3))
+
+DT::datatable(ModifiedGapminder)
+```
+
+
+
+## Export The Data
+
+Now, we will export this data using _here::here()_.
+
+```{r}
+write_csv(ModifiedGapminder, 
+          here::here("ModifiedGapminder.csv"))
+```
+
+I've checked and the data was successfully exported.
+
+
+
+## Re-Import The Data
+
+Now, we will reimport the same data, except we will give it a new name, so that we can confirm that it made it back in one piece.
+
+```{r, message=FALSE}
+ModifiedGapminderAgain <- 
+  read_csv(here::here("ModifiedGapminder.csv"))
+
+DT::datatable(ModifiedGapminderAgain)
+```
+
+
+Looks like the data made it back in successfully.
+
+
+
+## Play Around With Some Factors
+
+I will order the country factors by the minimum __*GDP*__, and then make a plot of this.
+
+```{r, fig.width=10, fig.height=7}
+ModifiedGapminderAgain %>%
+  ggplot( aes(x=fct_reorder(country, GDP100mill, min), 
+              y=GDP100mill)) +
+  geom_point(alpha=0.4, size=0.8) +
+  scale_y_log10(labels=scales::dollar_format()) +
+  ggtitle("") +
+  ylab("Total GDP (100 million)") +
+  xlab("Country") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5,
+                                   hjust=1, size=5))
+```
+
+The above plot is a bit messy, let's try making the same plot, but this time with bars extended...
+
+See that below.
+
+
+```{r, fig.width=10, fig.height=7}
+ModifiedGapminderAgain %>%
+  ggplot() +
+  geom_col(aes(x=fct_reorder(country, GDP100mill, min), 
+               y=GDP100mill)) +
+  scale_y_log10(labels=scales::dollar_format(),
+                limits=c(1,150000)) +
+  ggtitle("GDP per country in 2007") +
+  ylab("Total GDP (100 million)") +
+  xlab("Country") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5,
+                                   hjust=1, size=5))
+```
+
+
+This plot also has a bit too much going on, and isn't easily readable.  It would need to be more interactive to be of any value.  I believe that __*Shiny*__ and/or __*Plotly*__ are ways that we could do that, and I'm hoping this is something that gets covered in decent detail in the next course.
+
+
+
+
+# Exercise 4 - Visualization Design
+
+For this exercise, we will take a plot produced previously, and then jazz it up using some of the new thigns we've learned.  
+
+It iw worth mentioning that learning about _ggplot2_ was one of my main goals for the course, so when producing plots, I tended to go above an beyond what was required, so some of the previously produced plots may already look decent...but I'm sure i can add at least one nice new feature to them.
+
+
+## Class 8 Exercise Revision
+
+The first plot I will modify is a plot produced in the in-class exercises from lecture 08.  I will place the old and new version on top of each other.  Because of the dimensions of the plot, I believe this is a more effective visual comparison than placing them side-by-side.  
+
+
+```{r, fig.width = 10, fig.height = 5}
+gapminder %>% 
+  filter(continent == "Americas") %>% 
+  ggplot(aes(country, lifeExp)) + 
+  geom_point() +
+  geom_boxplot()
+```
+
+
+We can see that the plot isn't very nice looking.  The axes could have cleaner labels.  The plot lacks a title.  The country names are not readable.  The boxplots/countries could be ordered by median life expectancy,...
+
+Let's make some of those changes...
+
+```{r, fig.width = 10, fig.height = 5}
+gapminder %>% 
+  filter(continent == "Americas") %>% 
+  ggplot(aes(fct_reorder(country, lifeExp, median), lifeExp)) + 
+  geom_point() +
+  geom_boxplot() +
+  ggtitle("Life Expectancy Distribution over the Years in the Americas") +
+  xlab("Country") +
+  ylab("Life Expectancy (years)") +
+  ggthemes::theme_economist_white() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1,
+                                   hjust=1, size=5))
+```
+
+
+You can see that the second plot looks nicer.  Having the boxplots in order of increasing medians allows one to easily compare countries life expectantices from lowest to highest.  Rotating the labels on the x-axis also makes them readable, without having to shrink them down to a tiny size.
+
+
+## Assignment 2 Revision
+
+As an other exercise, I will take a plot I produced for Assignment #2 and make it look a bit nicer.  It is a simple barchart, but I will make it look a bit nicer.  First, the original version:
+
+
+```{r, warning=FALSE, message=FALSE}
+gapminder %>%
+  filter(year == 2007) %>%
+  select(continent) %>%
+  ggplot() +
+  aes(continent) + 
+  geom_bar( col="blue", fill="black") + 
+  ggtitle("Number of Countries in Each Continent") +
+  xlab("Continent") +
+  ylab("Number of Countries")
+```
+
+
+And now, a slightly nicer looking version:
+
+
+```{r, warning=FALSE, message=FALSE}
+gapminder %>%
+  filter(year == 2007) %>%
+  select(continent) %>%
+  ggplot() +
+  aes(fct_infreq(continent), fill=continent) + 
+  coord_flip() +
+  geom_bar() + 
+  ggtitle("Number of Countries in Each Continent") +
+  xlab("Continent") +
+  ylab("Number of Countries") +
+  theme_bw() +
+  theme(legend.position="none")
+```
+
+
+You can see that the second is much nicer.  It is easier to compare size of countries having the bars ordered in increasing size.  It also is a bit easier to compare having the bars being different colours...and since each bar is a different continent, it isn't overkill having each bar a different colour (it may be too much colour if they are just different levels for a categorical variable, but since they represent different continents, it is definitely helpful to visually separate them this way)
+
+
+
+# Exercise 5 - Write Figure to File
+
+The exercise reads as follows:
+
+Task: Use ggsave() to explicitly save a plot to file. Include the exported plot as part of your repository and assignment.
+
+Then, use __![Alt text] /path/to/img.png __ to load and embed that file into your report. You can play around with various options, such as:
+
+- Arguments of ggsave(), such as width, height, resolution or text scaling.
+- Various graphics devices, e.g. a vector vs. raster format.
+- Explicit provision of the plot object p via ggsave(..., plot = p). Show a situation in which this actually matters.
+
+
+
+
