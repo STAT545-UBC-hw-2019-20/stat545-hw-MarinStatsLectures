@@ -1,6 +1,6 @@
 # Assignment #5 Repository 
 
-This folder contains __Assignment #5__ work.
+This folder contains [Assignment #5](https://stat545.stat.ubc.ca/evaluation/hw05/hw05/) work.
 
 The focus of the assignment was to import/export data, to write a figure to file, and to make use of functions such as *fct_infreq()* , *fct_relevel()*, and so on.
 
