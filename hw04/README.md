@@ -1,6 +1,6 @@
 # Assignment #4 Repository 
 
-This folder contains __Assignment #4__ work.
+This folder contains [Assignment #4](https://stat545.stat.ubc.ca/evaluation/hw04/hw04/) work.
 
 The focus of the assignment was to widen and legthen data using _pivot_wide()_ and _pivot_long()_, as well as _table joins_.
 
