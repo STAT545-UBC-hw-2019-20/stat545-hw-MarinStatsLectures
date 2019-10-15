@@ -1,6 +1,6 @@
 # Assignment #3 Repository 
 
-This folder contains __Assignment #3__ work.
+This folder contains [Assignment #3](https://stat545.stat.ubc.ca/evaluation/hw03/hw03/) work.
 
 The focus of the assignment was to play around with _dplyr_ and _ggplot2_
 
