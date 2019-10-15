@@ -315,7 +315,7 @@ gapminder %>%
 You can see that the second plot looks nicer.  Having the boxplots in order of increasing medians allows one to easily compare countries life expectantices from lowest to highest.  Rotating the labels on the x-axis also makes them readable, without having to shrink them down to a tiny size.
 
 
-## Assignment 2 Revision
+## Assignment 2 Plot Revision
 
 As an other exercise, I will take a plot I produced for Assignment #2 and make it look a bit nicer.  It is a simple barchart, but I will make it look a bit nicer.  First, the original version:
 
@@ -369,7 +369,7 @@ Then, use __![Alt text] /path/to/img.png __ to load and embed that file into you
 - Explicit provision of the plot object p via ggsave(..., plot = p). Show a situation in which this actually matters.
 
 
-### Make a Plot to Save:
+## Make a Plot to Save
 
 Here I will reproduce one of the earlier plots, and save it in an object called __pLoTnAmE__.  I will then save this plot to file.  I will intentionally _not_ show the plot here.
 
@@ -389,6 +389,8 @@ pLoTnAmE <- gapminder %>%
 ```
 
 
+## Save Plot using ggsave()
+
 Now, I will save the plot created above.
 
 ```{r}
@@ -401,7 +403,11 @@ Now, I will load in that plot, and embed it in right here...
 ![Figure X: The Imported Plot](PlotToSave.png)
 
 
-This plot looks right.  Now below, I will play around with some of the height, width, resoultion, etc.  I will note here that I've had some challenges with this!  What I thought were reasonable values resulted in really large or really timy plots, things all out of proportion, etc.  It has taken a long time to get a plot that didn't look ridiculous!
+This plot looks right.  
+
+## Play Around with Settings
+
+Now below, I will play around with some of the height, width, resoultion, etc.  I will note here that I've had some challenges with this!  What I thought were reasonable values resulted in really large or really timy plots, things all out of proportion, etc.  It has taken a long time to get a plot that didn't look ridiculous!
 
 Let's see what I mean, take a look at the below....seems reasonable, right?
 
@@ -455,5 +461,5 @@ And let's see what it looks like once it's embedded.
 
 Well, I need to work a bit more on setting values for plots that are not the default and getting them to look good.  For now, I will leave things here as I don't have the time to explore this further at the moment...
 
-But aha, i figured out a large part of the problem!  When embedding, it seems to scale the plot to full page width, so if the plot is too small, it gets all stretched an out of proportion!  I will play around a bit more with this later, but I've made some sense of if for now... at least I know _why_ its all out of poropotion, now I just need to figure out _how_ to not have it do that!
+But wait, one more minute...aha, i figured out a large part of the problem!  When embedding, it seems to scale the plot to full page width, so if the plot is too small, it gets all stretched an out of proportion!  I will play around a bit more with this later, but I've made some sense of if for now... at least I know _why_ its all out of poropotion, now I just need to figure out _how_ to not have it do that (possibly have to specify the height/width in the embed code)!
 
