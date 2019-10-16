@@ -315,6 +315,7 @@ gapminder %>%
 You can see that the second plot looks nicer.  Having the boxplots in order of increasing medians allows one to easily compare countries life expectantices from lowest to highest.  Rotating the labels on the x-axis also makes them readable, without having to shrink them down to a tiny size.
 
 
+
 ## Assignment 2 Plot Revision
 
 As an other exercise, I will take a plot I produced for Assignment #2 and make it look a bit nicer.  It is a simple barchart, but I will make it look a bit nicer.  First, the original version:
@@ -353,6 +354,43 @@ gapminder %>%
 
 
 You can see that the second is much nicer.  It is easier to compare size of countries having the bars ordered in increasing size.  It also is a bit easier to compare having the bars being different colours...and since each bar is a different continent, it isn't overkill having each bar a different colour (it may be too much colour if they are just different levels for a categorical variable, but since they represent different continents, it is definitely helpful to visually separate them this way)
+
+
+Now, suppose we wanted to highlight __*Asia*__ on the plot, we could use a different colour for them to draw visual attention to them....see below:
+
+
+```{r, warning=FALSE, message=FALSE}
+gapminder %>%
+  filter(year == 2007) %>%
+  select(continent) %>%
+  ggplot() +
+  aes(fct_infreq(continent), fill=as.numeric(continent!="Asia")) +
+  coord_flip() +
+  geom_bar() + 
+  ggtitle("How are Countries Distributed Amongst Continents?") +
+  xlab("Continent") +
+  ylab("Number of Countries") +
+  theme_bw() +
+  theme(legend.position="none")
+```
+
+
+Note that the _as.numeric()_ isn't necessary, and just gets us a different set of colours...but I prefer the look of different shades of blue, as it draws attention to Asia while still having the same shade of colours.
+
+```{r, warning=FALSE, message=FALSE}
+gapminder %>%
+  filter(year == 2007) %>%
+  select(continent) %>%
+  ggplot() +
+  aes(fct_infreq(continent), fill=(continent!="Asia")) +
+  coord_flip() +
+  geom_bar() + 
+  ggtitle("How are Countries Distributed Amongst Continents?") +
+  xlab("Continent") +
+  ylab("Number of Countries") +
+  theme_bw() +
+  theme(legend.position="none")
+```
 
 
 
@@ -402,8 +440,10 @@ Now, I will load in that plot, and embed it in right here...
 
 ![Figure X: The Imported Plot](PlotToSave.png)
 
-
 This plot looks right.  
+
+One of the values of using *__plot=PlotName__* is that it allows you to save any plot.  If you do not specify the plot name, then R will save the most recently created plot.
+
 
 ## Play Around with Settings
 
